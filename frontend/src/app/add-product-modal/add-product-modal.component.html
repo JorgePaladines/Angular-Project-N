@@ -1,0 +1,56 @@
+<header>
+    <img class="header-logo" src="assets/logo.png" alt="Logo">
+</header>
+
+<div class="modal">
+    <div class="modal-container">
+        <h2>Formulario de Registro</h2>
+        <form (submit)="onSubmit()">
+            <i class="fa-solid fa-xmark"></i>
+            <div class="row">
+                <div class="column">
+                    <label for="id" [ngClass]="edicion ? 'label-disabled' : ''">ID</label>
+                    <input type="text" id="id" name="id" [(ngModel)]="newProduct.id" [ngClass]="idError ? 'error' : ''" (change)="validateID()" [disabled]="edicion" required>
+                    <span *ngIf="idError" class="error-text">{{ idErrorText }}</span>
+                </div>
+                <div class="column">
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" name="name" [(ngModel)]="newProduct.name" [ngClass]="nameError ? 'error' : ''" (change)="validateName()" required>
+                    <span *ngIf="nameError" class="error-text">{{ nameErrorText }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label for="description">Descripción</label>
+                    <input type="text" id="description" name="description" [(ngModel)]="newProduct.description" [ngClass]="descriptionError ? 'error' : ''" (change)="validateDescription()" required>
+                    <span *ngIf="descriptionError" class="error-text">{{ descriptionErrorText }}</span>
+                </div>
+                <div class="column">
+                    <label for="logo">Logo</label>
+                    <input type="text" id="logo" name="logo" [(ngModel)]="newProduct.logo" [ngClass]="logoError ? 'error' : ''" (change)="validateLogo()" required>
+                    <span *ngIf="logoError" class="error-text">{{ logoErrorText }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label for="date_release">Fecha de Liberación</label>
+                    <div class="date-picker" [ngClass]="releaseError ? 'error' : ''">
+                        <ejs-datepicker id="date_release" name="date_release" strictMode='true' format='dd/MM/yyy' [value]='dateValue' [(ngModel)]='newProduct.date_release' [min]='minDate' (change)="validateRelease($event)" required></ejs-datepicker>
+                    </div>
+                    <span *ngIf="releaseError" class="error-text">{{ releaseErrorText }}</span>
+                </div>
+                <div class="column">
+                    <label class="label-disabled" for="date_revision">Fecha de Revisión</label>
+                    <input type="text" id="date_revision" name="date_revision" [value]="formatDate(newProduct.date_revision)" [disabled]="true" required>
+                </div>
+            </div>
+            <div style="text-align: center; color: red;">
+                <p>{{ errorMessage }}</p>
+            </div>
+            <div class="buttons">
+                <button type="button" (click)="resetForm()">Reiniciar</button>
+                <button class="enviar-button" type="submit" [ngClass]="!this.idValid || !this.nameValid || !this.descriptionValid || !this.logoValid || !this.releaseValid ? 'disabled-enviar' : ''">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>

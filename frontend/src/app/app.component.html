@@ -1,0 +1,61 @@
+<header>
+  <img class="header-logo" src="assets/logo.png" alt="Logo">
+</header>
+
+<div class="container-out">
+  <div class="tools-container">
+    <div>
+      <input
+        type="text"
+        class="search-bar"
+        placeholder="Search..."
+        [(ngModel)]="searchQuery"
+        (input)="searchProduct(searchQuery)"
+      />
+    </div>
+    <div class="add-button-container">
+      <button class="add-button" [routerLink]="['/modal']">Agregar</button>
+    </div>
+  </div>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th style="padding-left: 65px !important;">Logo</th>
+          <th>Nombre del producto</th>
+          <th>Descripción</th>
+          <th>Fecha de liberación</th>
+          <th>Fecha de reestructuración</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td style="padding-left: 65px !important;">
+            <div class="logo-container">
+              <img class="logo" [src]="product.logo || null" alt="JG">
+            </div>
+          </td>        
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.date_release | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ product.date_revision | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <div class="more-options-button" (click)="openPopover(product.id)">
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAbUlEQVR4nN3TwQmAMAxA0b+FHUU3sDiatK6kdhPrADqBIuSQuzmEfgj09KCBQCsNMiYtwCOTLMBbgZcFuCtwtQADkOW7HR6bgBOoQLQAq9rh4RKMgn7YiMeCXEuW9++K2uHm8vSSAmeM6mUa6AXB9iShXnPwGAAAAABJRU5ErkJggg==">
+              <div class="popover" *ngIf="openPopoverId === product.id">
+                <ul>
+                  <li (click)="editProduct(product)">Editar</li>
+                  <li style="color: red;" (click)="deleteProduct(product.id)">Borrar</li>
+                </ul>
+              </div>
+            </div>
+          </td>        
+        </tr>
+      </tbody>
+    </table>
+    <p class="record-count">{{ products.length }} {{ products.length === 1 ? "Resultado" : "Resultados" }}</p>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
